@@ -10,28 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: Die Anwendung ist als interaktives Dashboard konzipiert. Oben befinden sich zentrale Filter- und Suchfunktionen (nach Name, Träger, Stadt). Darunter werden dynamische Statistiken (Anzahl der Einrichtungen) und eine visuelle Aufschlüsselung nach Trägern (Donut-Diagramm) angezeigt. Der Hauptbereich listet die Einrichtungen als einzelne Karten auf. Diese Struktur wurde gewählt, um Benutzern einen schnellen Überblick zu ermöglichen (Dashboard-Elemente) und gleichzeitig eine detaillierte, gefilterte Suche zu erlauben (Kartenliste). Die Interaktionen (Suche, Filter) aktualisieren alle Elemente der Seite in Echtzeit, was eine nahtlose und intuitive Benutzerführung gewährleistet. -->
-    <!-- Visualization & Content Choices: 1. Adressliste -> Ziel: Organisieren/Informieren -> Präsentation: Interaktive Karten in einem Grid-Layout -> Interaktion: Die Liste wird über Textsuche und Dropdown-Menüs gefiltert. Begründung: Karten sind visuell ansprechender und auf mobilen Geräten besser lesbar als eine Tabelle. Methode: HTML/CSS mit Tailwind, dynamisch gerendert durch JavaScript. 2. Trägerverteilung -> Ziel: Vergleichen/Informieren -> Präsentation: Donut-Diagramm -> Interaktion: Das Diagramm aktualisiert sich basierend auf den gesetzten Filtern. Begründung: Ein Donut-Diagramm zeigt Anteile und Verhältnisse auf einen Blick. Bibliothek: Chart.js (Canvas). 3. Gesamtzahl -> Ziel: Informieren -> Präsentation: Dynamische Kennzahl -> Interaktion: Die Zahl ändert sich in Echtzeit mit jeder Filteranpassung. Begründung: Gibt dem Nutzer direktes Feedback über die Ergebnisse seiner Filterung. Methode: JavaScript. -->
+    <!-- Application Structure Plan: Die Anwendung ist als interaktives Dashboard konzipiert. Oben befinden sich zentrale Filter- und Suchfunktionen (nach Name, Träger, Stadt). Darunter wird eine dynamische Statistik (Anzahl der Einrichtungen) angezeigt. Der Hauptbereich listet die Einrichtungen als einzelne Karten auf. Diese Struktur wurde gewählt, um Benutzern einen schnellen Überblick zu ermöglichen (Dashboard-Elemente) und gleichzeitig eine detaillierte, gefilterte Suche zu erlauben (Kartenliste). Die Interaktionen (Suche, Filter) aktualisieren alle Elemente der Seite in Echtzeit, was eine nahtlose und intuitive Benutzerführung gewährleistet. -->
+    <!-- Visualization & Content Choices: 1. Adressliste -> Ziel: Organisieren/Informieren -> Präsentation: Interaktive Karten in einem Grid-Layout -> Interaktion: Die Liste wird über Textsuche und Dropdown-Menüs gefiltert. Begründung: Karten sind visuell ansprechender und auf mobilen Geräten besser lesbar als eine Tabelle. Methode: HTML/CSS mit Tailwind, dynamisch gerendert durch JavaScript. 2. Gesamtzahl -> Ziel: Informieren -> Präsentation: Dynamische Kennzahl -> Interaktion: Die Zahl ändert sich in Echtzeit mit jeder Filteranpassung. Begründung: Gibt dem Nutzer direktes Feedback über die Ergebnisse seiner Filterung. Methode: JavaScript. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #fdfdfc;
             color: #333;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
         }
         .card {
             background-color: #ffffff;
@@ -50,8 +36,7 @@
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
         
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Interaktives Einrichtungsverzeichnis</h1>
-            <p class="mt-2 text-lg text-gray-600">Finden, filtern und analysieren Sie Einrichtungen</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Einrichtungen Verbund 44</h1>
         </header>
 
         <main>
@@ -70,17 +55,11 @@
                 </div>
             </div>
 
-            <section id="dashboard" class="mb-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-1 bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col justify-center items-center text-center">
+            <section id="dashboard" class="mb-8 grid grid-cols-1 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 flex flex-col justify-center items-center text-center">
                      <h2 class="text-xl font-semibold text-gray-700 mb-2">Einrichtungen (gefiltert)</h2>
                     <p id="statsCount" class="text-6xl font-bold text-amber-600">0</p>
                     <p class="text-gray-500 mt-2">Treffer für Ihre Auswahl</p>
-                </div>
-                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                    <h2 class="text-xl font-semibold text-gray-700 text-center mb-4">Verteilung nach Trägern</h2>
-                     <div class="chart-container">
-                        <canvas id="orgChart"></canvas>
-                    </div>
                 </div>
             </section>
 
@@ -103,7 +82,7 @@
             { name: "St. Barbara", org: "kath.", contacts: "Hanne Kohne (L) / Nikola Hofschlag", address: "Thüringer Straße 27, 49809 Lingen" },
             { name: "St. Antonius", org: "kath.", contacts: "Kerstin Lüken-Stoke (L)", address: "Kirchenkamp 14, 49811 Lingen" },
             { name: "Sonnenwald", org: "K.I.T.A. gGmbH", contacts: "Imke Wolf (L) / Carolina Fillinger", address: "Wilhem Rabe Straße 54, 48527 Nordhorn" },
-            { name: "Wirbelwind", org: "K.I.T.A. gGmbH", contacts: "Nicole Lüthe (L) / Gudrun Koop", address: "Von Behring Straße 7, 48529 Nordhorn" },
+            { name: "Wirbelwind", org: "K.I.T.A. gGmbH", contacts: "Nicole Lüthe (L) / Gudrun Koop", address: "Von Bering Straße 7, 48529 Nordhorn" },
             { name: "Mauerstraße", org: "ev-ref.", contacts: "Berndine Kethorn (L) / Daniela Brünemeyer", address: "Mauerstraße 44, 48465 Schüttorf" },
             { name: "Wietkampstrolche", org: "ev-ref.", contacts: "Sandra Kuhlmann (L) / Stefanie Fischer", address: "Bauweg 13, 48465 Schüttorf" },
             { name: "Kita Lutherherz", org: "ev-luth. Gemeinde", contacts: "Sabrina Beer (L) / Nadine Kip", address: "Bäumerstraße 16, 49808 Lingen" },
@@ -119,8 +98,6 @@
             const cityFilter = document.getElementById('cityFilter');
             const resultsGrid = document.getElementById('resultsGrid');
             const statsCount = document.getElementById('statsCount');
-            const orgChartCanvas = document.getElementById('orgChart');
-            let chart;
 
             const getCityFromAddress = (address) => {
                 const match = address.match(/\d{5}\s(.+)/);
@@ -162,75 +139,6 @@
                 }
             }
 
-            function updateDashboard(filteredData) {
-                statsCount.textContent = filteredData.length;
-
-                const orgCounts = filteredData.reduce((acc, item) => {
-                    acc[item.org] = (acc[item.org] || 0) + 1;
-                    return acc;
-                }, {});
-
-                const chartLabels = Object.keys(orgCounts);
-                const chartData = Object.values(orgCounts);
-
-                if (chart) {
-                    chart.destroy();
-                }
-                
-                chart = new Chart(orgChartCanvas, {
-                    type: 'doughnut',
-                    data: {
-                        labels: chartLabels,
-                        datasets: [{
-                            label: 'Anzahl Einrichtungen',
-                            data: chartData,
-                            backgroundColor: [
-                                'rgba(217, 119, 6, 0.7)', 
-                                'rgba(251, 191, 36, 0.7)',
-                                'rgba(120, 113, 108, 0.7)',
-                                'rgba(168, 162, 158, 0.7)',
-                                'rgba(245, 158, 11, 0.7)',
-                                'rgba(252, 211, 77, 0.7)',
-                                'rgba(234, 179, 8, 0.7)',
-                            ],
-                             borderColor: [
-                                'rgba(217, 119, 6, 1)', 
-                                'rgba(251, 191, 36, 1)',
-                                'rgba(120, 113, 108, 1)',
-                                'rgba(168, 162, 158, 1)',
-                                'rgba(245, 158, 11, 1)',
-                                'rgba(252, 211, 77, 1)',
-                                'rgba(234, 179, 8, 1)',
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'right',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        let label = context.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed !== null) {
-                                            label += context.parsed;
-                                        }
-                                        return label;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
             function filterAndRender() {
                 const searchTerm = searchInput.value.toLowerCase();
                 const selectedOrg = orgFilter.value;
@@ -246,7 +154,7 @@
                 });
 
                 renderResults(filteredData);
-                updateDashboard(filteredData);
+                statsCount.textContent = filteredData.length;
             }
 
             searchInput.addEventListener('input', filterAndRender);
